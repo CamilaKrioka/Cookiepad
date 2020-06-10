@@ -52,12 +52,10 @@ const ListadoRecetas = (props)=>{
                 ).then(
                         data => {
                                 setRecetas(data)
-                                console.log(data);
+                                
                                 
                         }
                 )
-
-
                 
 
 }

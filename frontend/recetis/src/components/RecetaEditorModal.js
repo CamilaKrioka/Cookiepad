@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 export default props =>{
 
     const [recetaName, setRecetaName] = useState('');
-    const [recetaIngredientes, setRecetaIngredientes] = useState('');
+    const [recetaIngredientes, setRecetaIngredientes] = useState('');    
     const [recetaPuntuacion, setRecetaPuntuacion] = useState('');
     const [recetaImage, setRecetaImage] = useState('');
     const [previewRecetaImage, setPreviewRecetaImage] = useState ('');
@@ -17,7 +17,7 @@ export default props =>{
 
     const handleRecetaIngredientes = (event)=>{
         setRecetaIngredientes (event.target.value);
-    }
+    } 
 
     const handleRecetaPuntuacion = (event)=>{
         setRecetaPuntuacion(event.target.value);
@@ -36,6 +36,7 @@ export default props =>{
         const formData = new FormData();
         formData.append('recetaName', recetaName);
         formData.append('recetaIngredientes', recetaIngredientes);
+        //formData.append('recetaUsuario', recetaUsuario);
         formData.append('recetaPuntuacion', recetaPuntuacion);
         formData.append('recetaImage', recetaImage);
         
@@ -67,14 +68,18 @@ export default props =>{
                     response => response.json()
                 ).then( 
                     data =>{
-                        console.log(data);
+                        setRecetaName(data.nombre);
+                        setRecetaIngredientes(data.ingredientes); 
+                        setRecetaPuntuacion(data.puntuacion);
+                        setRecetaImage('');
+                        setPreviewRecetaImage(data.imagen);
                     }
                 
              )
         }
             else{
                 setRecetaName('');
-                setRecetaIngredientes('');
+                setRecetaIngredientes(''); 
                 setRecetaPuntuacion('');
                 setRecetaImage('');
                 setPreviewRecetaImage('');
@@ -112,6 +117,7 @@ export default props =>{
                                   onChange={handleRecetaIngredientes}
                     />
                 </Form.Group>
+                
 
                 <Form.Group>
                     <Form.Label>Puntuacion</Form.Label>
