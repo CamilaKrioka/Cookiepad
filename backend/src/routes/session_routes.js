@@ -26,14 +26,14 @@ conexion.query(sql, (err, result, fields) =>{
     }else {
             if(result.length == 1){
                 req.session.user = req.body.user;
-                req.session.userId = result[0].userId;
+                req.session.user_id = result[0].userId;
         
                 res.json(
                     {
                         status : 'ok',
                         message : 'sesion iniciada',
                         loggedUser: {
-                                        id: req.session.user_id,
+                                        id: result[0].urs_id,
                                         nombre: result[0].usr_nombre
                                      }
                             
