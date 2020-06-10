@@ -10,10 +10,11 @@ router.post('/', (req, res) =>{
                 WHERE usr_nombre = '${req.body.user}'
                  AND usr_password = '${req.body.password}' ` ;
 
-let values = [
-                req.body.user,
-                req.body.password
-             ]
+ let values = [
+                    req.body.user,
+                    req.body.password
+              ]
+    
 
 conexion.query(sql, (err, result, fields) =>{
     if ( err ) {
@@ -26,7 +27,7 @@ conexion.query(sql, (err, result, fields) =>{
     }else {
             if(result.length == 1){
                 req.session.user = req.body.user,
-                req.session.userId = result[0].userId;
+                req.session.userId = result[0].user_id;
         
                 res.json(
                     {

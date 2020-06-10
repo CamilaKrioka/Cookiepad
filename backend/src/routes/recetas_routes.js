@@ -23,9 +23,13 @@ router.get('/', (req, res) => {
 
 router.get('/user/:id', (req, res) => {
 
-    let sql =`SELECT rec_id, rec_titulo, rec_ingredientes, rec_usr_id, rec_puntuacion, rec_foto 
-              FROM recetas
-              WHERE rec_usr_id = ${req.params.id};`
+    let sql =`
+    SELECT rec_id AS id, rec_titulo AS nombre,
+    rec_ingredientes AS ingredientes, 
+    rec_usr_id AS usuario, rec_puntuacion AS puntuacion,
+    rec_foto AS imagen 
+    FROM recetas
+    WHERE rec_usr_id = ${req.params.id};`
 
               conexion.query(sql, function(err, result, fields){
                 if (err) throw err;

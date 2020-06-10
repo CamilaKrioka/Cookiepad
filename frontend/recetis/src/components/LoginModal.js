@@ -23,9 +23,11 @@ const handleLoginClick = ()=>{
                 ).then( response => response.json() )
                 .then( data => {
                 if ( data.status === 'ok' ){
-                props.handleLoginSuccess(data.loggedUser);
+                props.handleLoginSuccess(data.loggedUser.id);
                 props.handleHide();
-                }else{
+               
+               
+            }else{
                 alert(data.message);
                 }
 });

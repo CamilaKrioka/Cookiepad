@@ -43,7 +43,7 @@ const ListadoRecetas = (props)=>{
         let endpoint = 'recetas';
 
         if( props.user && props.type === 'mispublicaciones'){
-                endpoint = 'recetas/user/' + props.user.id;
+                endpoint = 'recetas/user/' + props.user;
         }
 
         const cargarListadoRecetas = () =>{
@@ -52,8 +52,12 @@ const ListadoRecetas = (props)=>{
                 ).then(
                         data => {
                                 setRecetas(data)
+                                console.log(data);
+                                
                         }
                 )
+
+
                 
 
 }
@@ -65,7 +69,9 @@ const ListadoRecetas = (props)=>{
           setShowRecetaEditorModal(true);
         }
         
-
+for (let i = 0; i < recetas.length; i++) {
+                console.log(recetas[i]) 
+              }
     
     return(
 

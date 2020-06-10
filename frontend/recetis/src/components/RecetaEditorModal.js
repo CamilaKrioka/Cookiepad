@@ -7,7 +7,6 @@ export default props =>{
 
     const [recetaName, setRecetaName] = useState('');
     const [recetaIngredientes, setRecetaIngredientes] = useState('');
-    const [recetaUsuario, setRecetaUsuario] = useState('');
     const [recetaPuntuacion, setRecetaPuntuacion] = useState('');
     const [recetaImage, setRecetaImage] = useState('');
     const [previewRecetaImage, setPreviewRecetaImage] = useState ('');
@@ -18,10 +17,6 @@ export default props =>{
 
     const handleRecetaIngredientes = (event)=>{
         setRecetaIngredientes (event.target.value);
-    }
-
-    const handleRecetaUsuarioChange  = (event)=>{
-        setRecetaUsuario (event.target.value);
     }
 
     const handleRecetaPuntuacion = (event)=>{
@@ -41,7 +36,6 @@ export default props =>{
         const formData = new FormData();
         formData.append('recetaName', recetaName);
         formData.append('recetaIngredientes', recetaIngredientes);
-        formData.append('recetaUsuario', recetaUsuario);
         formData.append('recetaPuntuacion', recetaPuntuacion);
         formData.append('recetaImage', recetaImage);
         
@@ -81,7 +75,6 @@ export default props =>{
             else{
                 setRecetaName('');
                 setRecetaIngredientes('');
-                setRecetaUsuario('');
                 setRecetaPuntuacion('');
                 setRecetaImage('');
                 setPreviewRecetaImage('');
@@ -118,13 +111,6 @@ export default props =>{
                                   value= {recetaIngredientes}
                                   onChange={handleRecetaIngredientes}
                     />
-                </Form.Group>
-                <Form.Group>
-                     <Form.Label>Usuario</Form.Label>
-                    <Form.Control type="text"
-                                  value= {recetaUsuario}
-                                  onChange={handleRecetaUsuarioChange}
-                     />
                 </Form.Group>
 
                 <Form.Group>

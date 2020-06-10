@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import Header from './Header';
-import Footer from './Footer';
+//import Header from './Header';
+//import Footer from './Footer';
 import Navigationbar from './components/NavigationBar';
 import ProductSearch from './components/ProductSearch';
 import ListadoRecetas from './components/ListadoRecetas';
@@ -18,8 +18,8 @@ function App() {
 
   const[user, setUser] = useState(null);
 
-  const onLoginSuccess = (loggedUser) =>{
-    setUser(loggedUser);
+  const onLoginSuccess = (idusuario) =>{
+    setUser(idusuario);
   }
 
   
