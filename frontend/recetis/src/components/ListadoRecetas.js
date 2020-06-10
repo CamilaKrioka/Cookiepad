@@ -52,8 +52,8 @@ const ListadoRecetas = (props)=>{
 
         useEffect( cargarListadoRecetas, [] );
 
-        const handleEditClick = (idProducto)=>{
-                alert('Editar');
+        const handleEditClick = (idReceta)=>{
+          setShowRecetaEditorModal(true);
         }
         
 

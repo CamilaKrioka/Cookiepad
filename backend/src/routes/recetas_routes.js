@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
             if (err) throw err;
 
             res.json(result);
-            console.log("error en el del select");
+            
     })
 
 })
@@ -25,7 +25,7 @@ router.get('/user/:id', (req, res) => {
 
     let sql =`SELECT rec_id AS id, rec_titulo AS nombre, rec_ingredientes AS ingredientes, rec_usr_id AS usuario, rec_puntuacion AS puntuacion, rec_foto AS imagen 
               FROM recetas
-              WHERE rec_usr_id = ${req.params.id};`
+              WHERE usr_id = ${req.params.id};`
 
               conexion.query(sql, function(err, result, fields){
                 if (err) throw err;
@@ -50,7 +50,7 @@ router.get('//:id', (req, res) => {
             
 
             res.json(result)[0];
-            console.log("error en el de id");
+            
 
 })
 
@@ -76,7 +76,8 @@ let imageFileName = '';
     }else{
         console.log('No hay archivo');
     }
-    console.log(req.session);
+    
+
     let sqlInsert= `INSERT INTO recetas(rec_titulo, rec_ingredientes, rec_usr_id, rec_puntuacion, rec_foto)
                     VALUES (
                         '${req.body.recetaName}',

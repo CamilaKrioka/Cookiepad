@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -64,6 +64,18 @@ export default props =>{
             console.log('Error');
         })
     }
+
+    useEffect(
+        (=>{
+            if(props.idReceta){
+            alert('Modo edicion... debo cargar los datos de la receta con el ID' + props.idReceta)
+            }
+            else{
+                setRecetaName('');
+                set
+            }
+           })
+    )
 
 
     return(
