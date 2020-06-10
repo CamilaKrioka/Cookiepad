@@ -10,11 +10,16 @@ const ListadoRecetas = (props)=>{
 
         const [showRecetaEditorModal, setShowRecetaEditorModal] = useState (false);
 
+        const [showSelectedReceta, setSelecetedReceta] = useState (false);
+
+
         const handleHideRecetaEditorModal =() =>{
+                setSelecetedReceta(null);
                setShowRecetaEditorModal(false);
         }
 
         const onShowRecetaEditorModal = (message) =>{
+                setSelecetedReceta(null);
                 setShowRecetaEditorModal(true);
                 cargarListadoRecetas();
 
