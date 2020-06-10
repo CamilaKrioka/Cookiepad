@@ -10,7 +10,7 @@ const ListadoRecetas = (props)=>{
 
         const [showRecetaEditorModal, setShowRecetaEditorModal] = useState (false);
 
-        const [showSelectedReceta, setSelecetedReceta] = useState (false);
+        const [selectedReceta, setSelecetedReceta] = useState (false);
 
 
         const handleHideRecetaEditorModal =() =>{
@@ -18,10 +18,17 @@ const ListadoRecetas = (props)=>{
                setShowRecetaEditorModal(false);
         }
 
-        const onShowRecetaEditorModal = (message) =>{
+        const onShowRecetaEditorModal = () =>{
                 setSelecetedReceta(null);
                 setShowRecetaEditorModal(true);
                 cargarListadoRecetas();
+        }        
+
+        const handleRecetaSaved = (message) =>{
+             setShowRecetaEditorModal(false);
+             cargarListadoRecetas();
+
+        
 
                 Swal.fire(
                 {
@@ -31,10 +38,6 @@ const ListadoRecetas = (props)=>{
 
             )
 
-        }
-        
-        const handleRecetaSaved = () =>{
-                setShowRecetaEditorModal(false);
         }
 
         let endpoint = 'recetas';
@@ -58,6 +61,7 @@ const ListadoRecetas = (props)=>{
         useEffect( cargarListadoRecetas, [] );
 
         const handleEditClick = (idReceta)=>{
+          setSelecetedReceta(idReceta);
           setShowRecetaEditorModal(true);
         }
         
@@ -97,8 +101,7 @@ const ListadoRecetas = (props)=>{
                            onRecetaSaved = {handleRecetaSaved}
         />                   
         </>
-    )
-
+    );
 }
 
 export default ListadoRecetas;

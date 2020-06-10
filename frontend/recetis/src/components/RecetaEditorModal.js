@@ -68,8 +68,16 @@ export default props =>{
     useEffect(
         ()=>{
             if(props.idReceta){
-            alert('Modo edicion... debo cargar los datos de la receta con el ID' + props.idReceta)
-            }
+            
+                fetch(`http://localhost:8080/recetas/` + props.idReceta).then(
+                    response => response.json()
+                ).then( 
+                    data =>{
+                        console.log(data);
+                    }
+                
+             )
+        }
             else{
                 setRecetaName('');
                 setRecetaIngredientes('');
