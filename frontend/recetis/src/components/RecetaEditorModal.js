@@ -72,7 +72,9 @@ export default props =>{
             }
             else{
                 setRecetaName('');
+                setRecetaIngredientes('');
                 setRecetaUsuario('');
+                setRecetaPuntuacion('');
                 setRecetaImage('');
                 setPreviewRecetaImage('');
             }
