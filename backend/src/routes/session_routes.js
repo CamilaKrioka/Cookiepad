@@ -27,7 +27,8 @@ conexion.query(sql, (err, result, fields) =>{
     }else {
             if(result.length == 1){
                 req.session.user = req.body.user,
-                req.session.userId = result[0].user_id;
+                req.session.userId = result[0].usr_id;
+                console.log(result[0].usr_id);
         
                 res.json(
                     {
@@ -55,6 +56,7 @@ conexion.query(sql, (err, result, fields) =>{
 
     })
 
+    
 
 
 

@@ -3,8 +3,9 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-export default props =>{
 
+export default props =>{
+    
     const [recetaName, setRecetaName] = useState('');
     const [recetaIngredientes, setRecetaIngredientes] = useState('');    
     const [recetaPuntuacion, setRecetaPuntuacion] = useState('');
@@ -60,33 +61,22 @@ export default props =>{
         })
     }
 
-    useEffect(
+   /* useEffect(
         ()=>{
-            if(props.idReceta){
+            if(props.rec_id){
+
+                alert('modo edicion..debo cargar los dattos del producto con el ID' + props.rec_id);
             
-                fetch(`http://localhost:8080/recetas/` + props.idReceta).then(
-                    response => response.json()
-                ).then( 
-                    data =>{
-                        setRecetaName(data.nombre);
-                        setRecetaIngredientes(data.ingredientes); 
-                        setRecetaPuntuacion(data.puntuacion);
-                        setRecetaImage('');
-                        setPreviewRecetaImage(data.imagen);
-                    }
                 
-             )
-        }
-            else{
-                setRecetaName('');
-                setRecetaIngredientes(''); 
-                setRecetaPuntuacion('');
-                setRecetaImage('');
-                setPreviewRecetaImage('');
+            }else{
+                alert('Modo nuevo... debo resetear los campos del form');
+                console.log(rec_id);
             }
-           }, [props.idReceta]
+           }, [props.rec_id] 
+
+
            
-    )
+    )*/
     
 
 

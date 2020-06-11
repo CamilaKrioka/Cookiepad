@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 import Row from 'react-bootstrap/Row';
 import Receta from './Receta';
 import NavBarMisPublicaciones from './NavBarMisPublicaciones';
-import RecetaEditorModal from './RecetaEditorModal';
 import Swal from 'sweetalert2';
+import RecetaEditorModal from './RecetaEditorModal';
+
 const ListadoRecetas = (props)=>{
 
         const [ recetas, setRecetas ] = useState([])
@@ -43,7 +44,7 @@ const ListadoRecetas = (props)=>{
         let endpoint = 'recetas';
 
         if( props.user && props.type === 'mispublicaciones'){
-                endpoint = 'recetas/user/' + props.user;
+                endpoint = 'recetas/user/' + props.user.id;
         }
 
         const cargarListadoRecetas = () =>{
@@ -65,6 +66,7 @@ const ListadoRecetas = (props)=>{
         const handleEditClick = (idReceta)=>{
           setSelecetedReceta(idReceta);
           setShowRecetaEditorModal(true);
+          
         }
         
 for (let i = 0; i < recetas.length; i++) {

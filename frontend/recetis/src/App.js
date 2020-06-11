@@ -35,6 +35,7 @@ function App() {
            ).then( response => response.json() )
             .then( data => {
                       setUser(null);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
                     }
      )
 
@@ -87,7 +88,9 @@ function App() {
                 />
                 }
                 
-                <Redirect to={ { pathname: '/'} } />
+                
+        <Redirect to={ { pathname: '/'} } />
+
           
 
         </Switch>

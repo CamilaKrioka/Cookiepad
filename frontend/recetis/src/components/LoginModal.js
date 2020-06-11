@@ -25,8 +25,9 @@ const LoginModal = (props) => {
     .then( response => response.json() )
     .then( data => {
       if ( data.status === 'ok' ){
-        props.handleLoginSuccess(data.loggedUser.id);
+        props.handleLoginSuccess(data.loggedUser);
         props.handleHide();
+        console.log(data);
       }
       else{
         alert(data.message);

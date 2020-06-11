@@ -3,16 +3,23 @@ const router = express.Router();
 const path = require ('path');
 const conexion = require ('../connectionRoutes');
 
-
+/*esta es la consulta al index*/
 router.get('/', (req, res) => {
     
-    let sql = `SELECT rec_id AS id, rec_titulo AS nombre, rec_ingredientes AS ingredientes, rec_usr_id AS usuario, rec_puntuacion AS puntuacion, rec_foto AS imagen 
-              FROM recetas`;
+    let sql = `SELECT 
+             rec_id AS id,
+             rec_titulo AS nombre, 
+             rec_ingredientes AS ingredientes, 
+             rec_usr_id AS usuario, 
+             rec_puntuacion AS puntuacion, 
+             rec_foto AS imagen 
+             FROM recetas`;
 
     conexion.query(sql, function(err, result, fields){
             if (err) throw err;
 
             res.json(result);
+            
             
     })
 
@@ -20,41 +27,51 @@ router.get('/', (req, res) => {
 
 
 
-
+/*esta es la consulta a mis publicaciones*/
 router.get('/user/:id', (req, res) => {
 
-    let sql =`
-    SELECT rec_id AS id, rec_titulo AS nombre,
-    rec_ingredientes AS ingredientes, 
-    rec_usr_id AS usuario, rec_puntuacion AS puntuacion,
-    rec_foto AS imagen 
-    FROM recetas
-    WHERE rec_usr_id = ${req.params.id};`
+    let sql = `
+                SELECT rec_id AS id,
+                rec_titulo AS nombre,
+                rec_ingredientes AS ingredientes, 
+                rec_usr_id AS usuario, 
+                rec_puntuacion AS puntuacion,
+                rec_foto AS imagen 
+                FROM recetas
+                WHERE rec_usr_id = ${req.params.id};`
 
               conexion.query(sql, function(err, result, fields){
                 if (err) throw err;
                 
     
                 res.json(result);
+                
 })
 
 })
     
 
 
-
+/*esta es la consulta a una publicacion, me tiene que traer el detalle*/
 router.get('/:id', (req, res) => {
     
-    let sql = `SELECT rec_id, rec_titulo, rec_ingredientes , rec_usr_id, rec_puntuacion, rec_foto
-               FROM recetas
-               WHERE rec_id = ${req.params.id};`
+    let sql = `
+                SELECT rec_id AS id,
+                rec_titulo AS nombre,
+                rec_ingredientes AS ingredientes, 
+                rec_usr_id AS usuario, 
+                rec_puntuacion AS puntuacion,
+                rec_foto AS imagen 
+                FROM recetas
+                WHERE rec_id = ${req.params.id};`
               
-
+    
     conexion.query(sql, function(err, result, fields){
             if (err) throw err;
             
 
             res.json(result)[0];
+           
             
 
 })
