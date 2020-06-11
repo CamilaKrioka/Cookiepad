@@ -68,10 +68,7 @@ function App() {
                                               
                               children=
                                       { 
-                                        <>
-                                        <DetalleReceta />
-                                        <ProductSearch  />
-                                        </>
+                                      <DetalleReceta />
                                       }
 
                 />

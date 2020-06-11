@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Swal from 'sweetalert2';
 
 
 export default props =>{
@@ -41,43 +42,66 @@ export default props =>{
         formData.append('recetaPuntuacion', recetaPuntuacion);
         formData.append('recetaImage', recetaImage);
         
-        
-        fetch('http://localhost:8080/recetas', {
-            method: 'POST',
+        let url    = 'http://localhost:8080/recetas';
+        let method = 'POST';
+
+        if ( props.idReceta){
+            url += '/' + props.idReceta;
+            method = 'PUT';
+        }
+
+        fetch(url, {
+            method: method,
             body: formData,
             credentials: 'include'
         })
         .then( response => response.json() )
         .then( data => {
-            if (data.status === 'ok'){
-                props.onRecetaSaved();
+            
+            if ( data.status === 'ok' ){
+                props.onProductSaved(data.message);
             }
             else{
-                alert(data.message);
+                Swal.fire({
+                    text: data.message,
+                    icon: 'error'
+                })
+              
             }
-       })
+
+        })
         .catch( error => {
             console.log('Error');
         })
     }
 
-   /* useEffect(
+
+    useEffect(
         ()=>{
-            if(props.rec_id){
-
-                alert('modo edicion..debo cargar los dattos del producto con el ID' + props.rec_id);
-            
+            if (props.idReceta){
                 
-            }else{
-                alert('Modo nuevo... debo resetear los campos del form');
-                console.log(rec_id);
+                fetch(`http://localhost:8080/recetas/` + props.idReceta).then(
+                    response => response.json()
+                ).then(
+                    data =>{
+                        setRecetaName(data.nombre);
+                        setRecetaIngredientes(data.ingredientes);
+                        setRecetaPuntuacion(data.puntuacion);
+                        setRecetaImage('');
+                        setPreviewRecetaImage(data.imagen);
+                    }
+                )
+
             }
-           }, [props.rec_id] 
-
-
-           
-    )*/
-    
+            else{
+                setRecetaName('');
+                setRecetaIngredientes('');
+                setRecetaPuntuacion('');
+                setRecetaImage('');
+                setPreviewRecetaImage('');
+            }
+        }, [props.idProducto]
+    ) 
 
 
     return(

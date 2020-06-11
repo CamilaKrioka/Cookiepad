@@ -63,21 +63,22 @@ router.get('/:id', (req, res) => {
                 rec_puntuacion AS puntuacion,
                 rec_foto AS imagen 
                 FROM recetas
-                WHERE rec_id = ${req.params.id};`
+                WHERE rec_id = ${req.params.id};
+                `
               
     
     conexion.query(sql, function(err, result, fields){
             if (err) throw err;
             
 
-            res.json(result)[0];
+            res.json(result[0])
            
             
 
 })
 
 })
-
+/*hace las rutas de las imagenes*/
 router.post('/',(req, res) =>{
     
 let imageFileName = '';
@@ -99,7 +100,7 @@ let imageFileName = '';
         console.log('No hay archivo');
     }
     
-
+    /*Inserta en base de datos desde recetaEditorModal con los append*/
     let sqlInsert= `INSERT INTO recetas(rec_titulo, rec_ingredientes, rec_usr_id, rec_puntuacion, rec_foto)
                     VALUES (
                         '${req.body.recetaName}',

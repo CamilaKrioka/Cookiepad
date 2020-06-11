@@ -105,6 +105,7 @@ for (let i = 0; i < recetas.length; i++) {
         <RecetaEditorModal show={showRecetaEditorModal}
                            handleHide= {handleHideRecetaEditorModal}
                            onRecetaSaved = {handleRecetaSaved}
+                           idReceta =  {selectedReceta}
         />                   
         </>
     );
