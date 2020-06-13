@@ -5,8 +5,10 @@ const express = require('express');
 const cors = require ('cors');
 const bodyParser = require ('body-parser');
 const fileUpload = require ('express-fileupload');
+
 const recetasRoutes = require('./routes/recetas_routes');
 const sessionRoutes = require ('./routes/session_Routes');
+const favoritosRoutes = require('./routes/favoritos_routes');
 
 
 const app = express();
@@ -37,5 +39,6 @@ app.use( session({
 }))
 app.use('/auth', sessionRoutes);
 app.use('/recetas', recetasRoutes);
+app.use('/favoritos', favoritosRoutes);
 
 app.listen(8080, ()=>{ console.log('Escuchando....')} );

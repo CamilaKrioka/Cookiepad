@@ -18,11 +18,11 @@ function App() {
 
   const[user, setUser] = useState(null);
 
-  const onLoginSuccess = (idusuario) =>{
-    setUser(idusuario);
+  const onLoginSuccess = (loggedUser) =>{
+    setUser(loggedUser);
   }
 
-  
+  const[terminoBuscado, setTerminoBuscado] = useState('null')
 
   const onLogout = ()=>{
     
@@ -32,15 +32,26 @@ function App() {
                   method: 'DELETE',
                   credentials : 'include'
                }
-           ).then( response => response.json() )
-            .then( data => {
-                      setUser(null);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-                    }
+    ).then( response => response.json() )
+    .then( data => {
+                    setUser(null);
+                    
+                   }
      )
 
   }
+
+  const handleSearchRec = (terminoBuscado)=>{
+   if(terminoBuscado === ''){
+    terminoBuscado =null;
+   }
+    setTerminoBuscado(terminoBuscado); 
+  }
+
+
   return (
+
+    
 
     <Router>
 
@@ -53,12 +64,15 @@ function App() {
         <Switch>
               <Route exact path= "/" children={
                                         <>
-                                        <ProductSearch />
+                                        <ProductSearch onSearchRec ={handleSearchRec}/>
 
                                         <Slider />
                                         
                                         
-                                        <ListadoRecetas type="recetas"/>
+                                        <ListadoRecetas type="recetas"
+                                                        user= {user}
+                                                        searchRec={terminoBuscado}
+                                        />
                                         </>
                                         
                                               }
@@ -76,13 +90,25 @@ function App() {
                 
 
                 { user &&
-                <Route exact path= "/mispublicaciones" children={
+                <>
+                <Route exact path= "/mispublicaciones"
+                                                             children={
                                                                 
                                                               <ListadoRecetas type="mispublicaciones"
                                                                               user= {user}
                                                               />
                                                                 }
                 />
+                <Route exact path="/favoritos"
+                             children={
+                                                                                            
+                                              <ListadoRecetas type="favoritos"
+                                                              user= {user} 
+                                              />
+                  
+                                      }
+                   />
+                </>
                 }
                 
                 
@@ -94,7 +120,9 @@ function App() {
 
      
     </Router>
+  
   )
+  
 }
 
 export default App;

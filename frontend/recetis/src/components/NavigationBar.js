@@ -54,7 +54,9 @@ const Navigationbar = (props) =>{
                                         Mis publicaciones
                                     </Link>
 
-                                    <Nav.Link>Favoritos</Nav.Link>
+                                    <Link to="/favoritos" className="nav-link">
+                                        Mis favoritos
+                                    </Link>
 
                                     <NavDropdown alignRight title={props.user.nombre} >
                                         <NavDropdown.Item>Mi cuenta</NavDropdown.Item>

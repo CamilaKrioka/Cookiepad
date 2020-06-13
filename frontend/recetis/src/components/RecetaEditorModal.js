@@ -59,7 +59,7 @@ export default props =>{
         .then( data => {
             
             if ( data.status === 'ok' ){
-                props.onProductSaved(data.message);
+                props.onRecetaSaved(data.message);
             }
             else{
                 Swal.fire({
@@ -81,26 +81,28 @@ export default props =>{
             if (props.idReceta){
                 
                 fetch(`http://localhost:8080/recetas/` + props.idReceta).then(
-                    response => response.json()
+                   response => response.json()
                 ).then(
-                    data =>{
-                        setRecetaName(data.nombre);
-                        setRecetaIngredientes(data.ingredientes);
-                        setRecetaPuntuacion(data.puntuacion);
-                        setRecetaImage('');
-                        setPreviewRecetaImage(data.imagen);
+                    data => {
+                        
+                                setRecetaName(data.nombre);
+                                setRecetaIngredientes(data.ingredientes);
+                                setRecetaPuntuacion(data.puntuacion);
+                                setRecetaImage('');
+                                setPreviewRecetaImage(data.imagen);
+                                console.log(props.idReceta);
                     }
-                )
 
-            }
-            else{
+                )
+            }else{
                 setRecetaName('');
                 setRecetaIngredientes('');
                 setRecetaPuntuacion('');
                 setRecetaImage('');
                 setPreviewRecetaImage('');
-            }
-        }, [props.idProducto]
+
+                 }
+         }, [props.idReceta]
     ) 
 
 

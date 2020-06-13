@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Row from 'react-bootstrap/row';
 import Col from 'react-bootstrap/col';
 import Button from 'react-bootstrap/Button';
@@ -6,7 +6,19 @@ import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 
 
-export default () =>
+export default (props) =>{
+
+const [terminoBuscado, setTerminoBuscado] = useState('');
+
+const handleTerminoBuscadoChange =(event)=>{
+    let busqueda = event.target.value;
+    setTerminoBuscado(busqueda);
+
+    props.onSearchRec(busqueda);
+}
+
+return(
+
      
      <Row className="my-3 justify-content-center my-0">
 
@@ -19,7 +31,11 @@ export default () =>
                     <Form.Row>
 
                         <Col sm={10} xs={8}>
-                            <FormControl type="text" />
+                            <FormControl type="text" 
+                                         value={terminoBuscado}
+                                         onChange= {handleTerminoBuscadoChange}
+                            />
+                           
                         </Col>
 
                         <Col sm={2} xs={4}>
@@ -41,3 +57,5 @@ export default () =>
 
         
      </Row>
+
+)}

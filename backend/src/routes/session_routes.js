@@ -56,6 +56,8 @@ conexion.query(sql, (err, result, fields) =>{
 
     })
 
+})
+
     
 
 
@@ -67,7 +69,7 @@ router.delete('/', (req, res) =>{
             res.json(
                 {
                     status : 'error',
-                    mesagge : 'Error al cerra la sesion'
+                    mesagge : 'Error al cerrar la sesion'
                 
                 }
             )
@@ -82,6 +84,6 @@ router.delete('/', (req, res) =>{
         }
     })
 })
-});   
+   
 
  module.exports = router;
