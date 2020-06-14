@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 //import Header from './Header';
 //import Footer from './Footer';
 import Navigationbar from './components/NavigationBar';
@@ -6,7 +6,7 @@ import ProductSearch from './components/ProductSearch';
 import ListadoRecetas from './components/ListadoRecetas';
 import Slider from './components/Slider';
 import DetalleReceta from './components/DetalleReceta';
-import{
+import {
   BrowserRouter as Router,
   Switch,
   Route,
@@ -16,113 +16,134 @@ import{
 
 function App() {
 
-  const[user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
+  const [searchRec, setSearchRec] = useState(null);
+  const [filtros, setFiltros] = useState({
+    categoria: '',
+    modos: '',
+    orden: 'Mejor puntuacion',
+  });
 
-  const onLoginSuccess = (loggedUser) =>{
+  const onLoginSuccess = (loggedUser) => {
+    console.log("onLoginSucces", loggedUser);
     setUser(loggedUser);
   }
 
-  const[terminoBuscado, setTerminoBuscado] = useState('null')
 
-  const onLogout = ()=>{
-    
+
+  const onLogout = () => {
+
     let url = 'http://localhost:8080/auth';
 
     fetch(url, {
-                  method: 'DELETE',
-                  credentials : 'include'
-               }
-    ).then( response => response.json() )
-    .then( data => {
-                    setUser(null);
-                    
-                   }
-     )
+      method: 'DELETE',
+      credentials: 'include'
+    }
+    ).then(response => response.json())
+      .then(data => {
+        setUser(null);
+
+      }
+      )
 
   }
 
-  const handleSearchRec = (terminoBuscado)=>{
-   if(terminoBuscado === ''){
-    terminoBuscado =null;
-   }
-    setTerminoBuscado(terminoBuscado); 
+  const handleSearchRec = (terminoBuscado) => {
+    if (terminoBuscado === '') {
+      terminoBuscado = null;
+    }
+    setSearchRec(terminoBuscado);
   }
 
+  const handleFilterChange = filtros => {
+    setFiltros(filtros);
 
+  }
+
+ console.log("User", user);
   return (
 
-    
+
 
     <Router>
 
-        <Navigationbar user={user}
-                      handleLoginSuccess = {onLoginSuccess}
-                      handleLogout = {onLogout}
-                      
+      <Navigationbar user={user}
+        handleLoginSuccess={onLoginSuccess}
+        handleLogout={onLogout}
+
+      />
+
+      <Switch>
+        <Route exact path="/" children={
+          <>
+            <ProductSearch onSearchRec={handleSearchRec} />
+
+            <Slider />
+
+
+            <ListadoRecetas type="recetas"
+              user={user}
+              searchRec={searchRec}
+              filtros={filtros}
+              onFilterChange={handleFilterChange}
+            />
+          </>
+
+        }
         />
 
-        <Switch>
-              <Route exact path= "/" children={
-                                        <>
-                                        <ProductSearch onSearchRec ={handleSearchRec}/>
+        <Route exact path="/recetas/:id"
 
-                                        <Slider />
-                                        
-                                        
-                                        <ListadoRecetas type="recetas"
-                                                        user= {user}
-                                                        searchRec={terminoBuscado}
-                                        />
-                                        </>
-                                        
-                                              }
+          children=
+          {
+            <DetalleReceta />
+          }
+
+        />
+
+
+
+        {user &&
+          <>
+            <Route exact path="/mispublicaciones"
+              children={
+
+                <ListadoRecetas type="mispublicaciones"
+                  user={user}
+                  searchRec={searchRec}
+                  filtros={filtros}
+                  onFilterChange={handleFilterChange}
                 />
-                
-                <Route path="/recetas/:id" 
-                                              
-                              children=
-                                      { 
-                                      <DetalleReceta />
-                                      }
+              }
+            />
+            <Route exact path="/favoritos"
+              children={
+
+                <ListadoRecetas type="favoritos"
+                  user={user}
+                  searchRec={searchRec}
+                  filtros={filtros}
+                  onFilterChange={handleFilterChange}
 
                 />
 
-                
+              }
+            />
+          </>
+        }
 
-                { user &&
-                <>
-                <Route exact path= "/mispublicaciones"
-                                                             children={
-                                                                
-                                                              <ListadoRecetas type="mispublicaciones"
-                                                                              user= {user}
-                                                              />
-                                                                }
-                />
-                <Route exact path="/favoritos"
-                             children={
-                                                                                            
-                                              <ListadoRecetas type="favoritos"
-                                                              user= {user} 
-                                              />
-                  
-                                      }
-                   />
-                </>
-                }
-                
-                
-        <Redirect to={ { pathname: '/'} } />
 
-          
+        <Redirect to={{ pathname: '/' }} />
 
-        </Switch>
 
-     
+
+      </Switch>
+
+
     </Router>
-  
+
   )
-  
+
 }
 
 export default App;

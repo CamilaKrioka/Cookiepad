@@ -3,31 +3,34 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { LinkContainer } from 'react-router-bootstrap';
 
-export default (props) =>{
+export default (props) => {
 
-    return(
+    return (
 <>
-        <Row className="d-flex justify-content-center">
-                    <Col md="12"> 
+            <Row className="d-flex justify-content-center">
+                <Col md="12">
                     <Breadcrumb>
-                        <Breadcrumb.Item href='http://localhost:3000'>Incio</Breadcrumb.Item>
-                        <Breadcrumb.Item href="#"> 
-                            Mis publicaciones
+                        <LinkContainer to="/" exact>
+                            <Breadcrumb.Item>Inicio</Breadcrumb.Item>
+                      </LinkContainer>
+                            <Breadcrumb.Item href="#">
+                                Mis publicaciones
                         </Breadcrumb.Item>
                         </Breadcrumb>
                     </Col>
 
         </Row>
 
-        <Row className="my-3 ml-4">
+                <Row className="my-3 ml-4">
 
-            <Col>
-                <Button onClick= {props.handleShowRecetaEditorModal}>
-                    Nueva Publicacion
+                    <Col>
+                        <Button onClick={props.handleShowRecetaEditorModal}>
+                            Nueva Publicacion
                 </Button>
-            </Col>
+                    </Col>
 
-        </Row>
+                </Row>
   </>
 )}

@@ -4,20 +4,20 @@ const conexion = require('../connectionRoutes');
 
 
 //ruta de los favoritos
-router.get(':user', ( req, res) =>{
+router.get('/:user', ( req, res) =>{
         let sql =
                 `SELECT recetas.rec_id AS id, rec_titulo AS nombre, rec_ingredientes AS ingredientes, rec_usr_id AS usuario, rec_puntuacion AS puntuacion, rec_foto AS imagen
                         FROM recetas, favoritos
-                        WHERE favoritos.fav_usr_id = ${req.params.user}
+                        WHERE favoritos.fav_usr_id =?
                          AND recetas.rec_id = favoritos.fav_rec_id`
 
 let values = [req.params.user]
 
-conexion.query( sql, values, (err, result, fields =>{
+conexion.query( sql, values, (err, result, fields )=>{
     if(err) throw err;
 
     res.json(result);
-}))
+})
 
 })
 
@@ -27,7 +27,7 @@ router.post('/', (req, res) =>{
         let sqlInsert = `INSERT INTO favoritos
                          VALUES(?, ?)`;
 
-                         let values = [ req.body.userId, req.body.recId ];
+ let values = [ req.body.userId, req.body.recId ];
 
 conexion.query(sqlInsert, values,  (err, result, fields) =>{
         if (err){
@@ -57,7 +57,7 @@ router.delete('/', (req, res) =>{
                          WHERE fav_usr_id =?
                            AND fav_rec_id=?`;
 
-                         let values = [ req.body.userId, req.body.recId ];
+let values = [ req.body.userId, req.body.recId ];
 
 conexion.query(sqlDelete, values,  (err, result, fields) =>{
         if (err){

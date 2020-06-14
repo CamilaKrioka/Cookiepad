@@ -32,7 +32,7 @@ export default (props)=>{
         <Card>
 
             <Card.Body>
-                {props.type === 'recetas' && props.user &&
+                { (props.type === 'recetas' || props.type === 'favoritos') && props.user &&
                 
                 <img style={{cursor: "pointer"}} 
                      src={props.isFav ? InconoFav : InconoNoFav}

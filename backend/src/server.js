@@ -9,6 +9,8 @@ const fileUpload = require ('express-fileupload');
 const recetasRoutes = require('./routes/recetas_routes');
 const sessionRoutes = require ('./routes/session_Routes');
 const favoritosRoutes = require('./routes/favoritos_routes');
+const categoriasRoutes = require('./routes/categorias_tags_routes');
+const modosRoutes = require('./routes/ModosRoutes');
 
 
 const app = express();
@@ -40,5 +42,7 @@ app.use( session({
 app.use('/auth', sessionRoutes);
 app.use('/recetas', recetasRoutes);
 app.use('/favoritos', favoritosRoutes);
+app.use('/categorias', categoriasRoutes);
+app.use('/modos', modosRoutes);
 
 app.listen(8080, ()=>{ console.log('Escuchando....')} );
