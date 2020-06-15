@@ -22,7 +22,23 @@ router.get('/', (req, res) => {
         where += 'rec_modo_id = ' + req.query.modos;
     }
     sql += where;
-    console.log(sql);
+
+    if (req.query.orden) {
+        orderBy = ' ORDER BY ';
+
+        switch (req.query.orden) {
+            case 'menor_puntuacion':
+                orderBy += 'rec_puntuacion ASC';
+                break;
+
+            case 'mayor_puntuacion':
+                orderBy += 'rec_puntuacion DESC';
+                break;
+        }
+    }
+
+    sql += orderBy;
+
 
     conexion.query(sql, function (err, result, fields) {
         if (err) throw err;
@@ -37,19 +53,42 @@ router.get('/', (req, res) => {
 //buscador
 router.get('/search/:terminoBuscado', (req, res) => {
 
-    let sqlSearch = `SELECT 
-             rec_id AS id,
-             rec_titulo AS nombre, 
-             rec_ingredientes AS ingredientes, 
-             rec_usr_id AS usuario, 
-             rec_puntuacion AS puntuacion, 
-             rec_foto AS imagen,
-             rec_tag_id AS categorias,
-             rec_modo_id AS modos 
-             FROM recetas
-             WHERE rec_titulo LIKE ?`;
+    let sqlSearch = `SELECT rec_id AS id, rec_titulo AS nombre, rec_ingredientes AS ingredientes, rec_usr_id AS usuario, rec_puntuacion AS puntuacion, rec_foto AS imagen, rec_tag_id AS categorias, rec_modo_id AS modos
+                   FROM recetas
+                   WHERE rec_titulo LIKE ?`;
 
     let values = [`%${req.params.terminoBuscado}%`];
+
+
+    let orderBy = '';
+
+    if (req.query.categoria) {
+        sqlSearch += 'AND rec_tag_id = ' + req.query.categoria;
+    }
+
+    if (req.query.modos) {
+
+        sqlSearch += ' AND rec_modo_id = ' + req.query.modos;
+    }
+
+
+    if (req.query.orden) {
+        orderBy = ' ORDER BY ';
+
+        switch (req.query.orden) {
+            case 'menor_puntuacion':
+                orderBy += 'rec_puntuacion ASC';
+                break;
+
+            case 'mayor_puntuacion':
+                orderBy += 'rec_puntuacion DESC';
+                break;
+        }
+    }
+
+    sqlSearch += orderBy;
+
+
 
     conexion.query(sqlSearch, values, function (err, result, fields) {
         if (err) throw err;
@@ -66,17 +105,41 @@ router.get('/search/:terminoBuscado', (req, res) => {
 /*esta es la consulta a mis publicaciones*/
 router.get('/user/:id', (req, res) => {
 
-    let sql = `
-                SELECT rec_id AS id,
-                rec_titulo AS nombre,
-                rec_ingredientes AS ingredientes, 
-                rec_usr_id AS usuario, 
-                rec_puntuacion AS puntuacion,
-                rec_foto AS imagen 
-                FROM recetas
-                WHERE rec_usr_id = ${req.params.id};`
+    let sqlPub = `SELECT rec_id AS id, rec_titulo AS nombre, rec_ingredientes AS ingredientes, rec_usr_id AS usuario, rec_puntuacion AS puntuacion, rec_foto AS imagen, rec_modo_id AS modo, rec_tag_id AS categoria
+                  FROM recetas
+                  WHERE rec_usr_id = ${req.params.id};`
 
-    conexion.query(sql, function (err, result, fields) {
+
+    /*let orderBy = '';
+
+    if (req.query.categoria) {
+        sqlPub += 'AND rec_tag_id = ' + req.query.categoria;
+    }
+
+    if (req.query.modos) {
+
+        sqlPub += ' AND rec_modo_id = ' + req.query.modos;
+    }
+
+
+    if (req.query.orden) {
+        orderBy = ' ORDER BY ';
+
+        switch (req.query.orden) {
+            case 'menor_puntuacion':
+                orderBy += 'rec_puntuacion ASC';
+                break;
+
+            case 'mayor_puntuacion':
+                orderBy += 'rec_puntuacion DESC';
+                break;
+        }
+    }
+
+    sqlPub += orderBy;
+    console.log(sqlPub);*/
+
+    conexion.query(sqlPub, function (err, result, fields) {
         if (err) throw err;
 
 
@@ -142,14 +205,27 @@ router.post('/', (req, res) => {
                    rec_ingredientes, 
                    rec_usr_id, 
                    rec_puntuacion, 
-                   rec_foto)
+                   rec_foto,
+                   rec_modo_id,
+                   rec_tag_id)
                    VALUES (
                         '${req.body.recetaName}',
                         '${req.body.recetaIngredientes}',
                         ${req.session.userId},
                         ${req.body.recetaPuntuacion},
-                        '${process.env.IMAGES_URL + imageFileName}'
-                    )`;
+                        '${process.env.IMAGES_URL + imageFileName}',
+                         ${req.body.selectModo},
+                       ${req.body.recetaCategory} )`;
+
+    console.log(req.body.recetaName,
+        req.body.recetaIngredientes,
+        req.session.userId,
+        req.body.recetaPuntuacion,
+        req.body.selectModo,
+        req.body.recetaCategory);
+
+    
+
 
     conexion.query(sqlInsert, function (err, result, fields) {
         if (err) {
@@ -180,12 +256,16 @@ router.put('/:id', (req, res) => {
                     SET 
                     rec_titulo = ?,
                     rec_ingredientes = ?,
-                    rec_puntuacion = ?`;
+                    rec_puntuacion = ?,
+                    rec_modo_id=?,
+                    rec_tag_id=? `;
 
     let values = [
         req.body.recetaName,
         req.body.recetaIngredientes,
-        req.body.recetaPuntuacion
+        req.body.recetaPuntuacion,
+        req.body.modo,
+        req.body.recetaCategory
     ];
 
     if (req.files) {

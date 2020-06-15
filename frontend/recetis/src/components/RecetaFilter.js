@@ -6,12 +6,15 @@ import Button from 'react-bootstrap/Button';
 
 export default props =>{
 
-    const[categorias, setCategorias] = useState( [ {id: '', nombre: 'Todas' } ] )
-    const[modos, setModos] = useState( [ {id: '', nombre: 'Todas' } ] )
+    const[categorias, setCategorias] = useState( [ {id: '', nombre: 'Todas' } ] );
+    const[modos, setModos] = useState( [ {id: '', nombre: 'Todas' } ] );
+    
    
     const categoriaRef = useRef ('null');
     const modoRef = useRef ('null');
     const ordenRef = useRef ('null');
+
+    
 
     useEffect( () =>{
         fetch('http://localhost:8080/categorias').then(
@@ -33,7 +36,7 @@ export default props =>{
         } )
         categories.unshift( <option value=''>
                              Todas
-                            </option>)
+                            </option>);
         return categories;
     }
 
@@ -72,7 +75,7 @@ export default props =>{
         )
         
     }
-    
+     
     
 
     return(
@@ -111,7 +114,8 @@ export default props =>{
                         <Form.Control style={{cursor: "pointer"}}  as= "select"
                                       onChange={handleFilterChange}
                                       ref={ordenRef}
-                                      >
+                         >
+                            
                             <option value="menor_puntuacion">Menor puntuacion</option>
                             <option value="mayor_puntuacion">Mayor puntuacion</option>
 

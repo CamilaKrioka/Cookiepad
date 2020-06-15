@@ -12,6 +12,7 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
+import Perfil from './components/Perfil';
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
   const [filtros, setFiltros] = useState({
     categoria: '',
     modos: '',
-    orden: 'Mejor puntuacion',
+    orden: '',
   });
 
   const onLoginSuccess = (loggedUser) => {
@@ -60,7 +61,7 @@ function App() {
 
   }
 
- console.log("User", user);
+ 
   return (
 
 
@@ -128,6 +129,13 @@ function App() {
                 />
 
               }
+            />
+            <Route exact path="/miperfil"
+                   children={
+                     <Perfil  type="miperfil"
+                              user={user}
+                     />
+                   }
             />
           </>
         }

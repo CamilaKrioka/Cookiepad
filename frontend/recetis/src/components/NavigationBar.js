@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/button';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import { Link } from 'react-router-dom';
+import { Link, useHistory} from 'react-router-dom';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import logo from '../logo.png';
 import LoginModal from './LoginModal';
 
 
 const Navigationbar = (props) => {
+
+  const history = useHistory();
 
   const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -59,7 +61,9 @@ const Navigationbar = (props) => {
                                     </Link>
 
                 <NavDropdown alignRight title={props.user.nombre} >
-                  <NavDropdown.Item>Mi cuenta</NavDropdown.Item>
+                  <NavDropdown.Item onClick={ ()=> {history.push('/miperfil')} }>
+                   Mi perfil
+                  </NavDropdown.Item>
                   <NavDropdown.Divider />
 
                   <NavDropdown.Item onClick={props.handleLogout}>
