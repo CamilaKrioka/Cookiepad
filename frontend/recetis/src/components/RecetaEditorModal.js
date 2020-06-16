@@ -145,10 +145,10 @@ const modosOptions = ()=>{
             setRecetaName(data.nombre);
             setRecetaIngredientes(data.ingredientes);
             setRecetaPuntuacion(data.puntuacion);
-            setRecetaImage('');
+            setRecetaImage(data.imagen);
             setPreviewRecetaImage(data.imagen);
-            setSelectModo(data.modo);
-            setRecetaCategory(data.categoria);
+            setSelectModo(data.selectModo);
+            setRecetaCategory(data.recetaCategory);
           }
 
         )

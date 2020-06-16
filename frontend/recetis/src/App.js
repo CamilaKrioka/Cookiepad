@@ -25,6 +25,9 @@ function App() {
     orden: '',
   });
 
+  
+
+
   const onLoginSuccess = (loggedUser) => {
     console.log("onLoginSucces", loggedUser);
     setUser(loggedUser);
@@ -97,7 +100,7 @@ function App() {
 
           children=
           {
-            <DetalleReceta />
+            <DetalleReceta  user={user}/>
           }
 
         />
@@ -134,6 +137,7 @@ function App() {
                    children={
                      <Perfil  type="miperfil"
                               user={user}
+                              
                      />
                    }
             />

@@ -27,10 +27,12 @@ export default (props)=>{
 
     
         return(
+
+        
         <Col md={8} lg={6} xl={4} className="mb-4 text-center d-flex aling-items-stretch">
 
         <Card>
-
+       
             <Card.Body>
                 { (props.type === 'recetas' || props.type === 'favoritos') && props.user &&
                 

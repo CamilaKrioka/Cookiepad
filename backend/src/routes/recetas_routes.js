@@ -107,13 +107,13 @@ router.get('/user/:id', (req, res) => {
 
     let sqlPub = `SELECT rec_id AS id, rec_titulo AS nombre, rec_ingredientes AS ingredientes, rec_usr_id AS usuario, rec_puntuacion AS puntuacion, rec_foto AS imagen, rec_modo_id AS modo, rec_tag_id AS categoria
                   FROM recetas
-                  WHERE rec_usr_id = ${req.params.id};`
+                  WHERE rec_usr_id = ${req.params.id}`;
 
 
-    /*let orderBy = '';
+    let orderBy = '';
 
     if (req.query.categoria) {
-        sqlPub += 'AND rec_tag_id = ' + req.query.categoria;
+        sqlPub += ' AND rec_tag_id = ' + req.query.categoria;
     }
 
     if (req.query.modos) {
@@ -137,7 +137,7 @@ router.get('/user/:id', (req, res) => {
     }
 
     sqlPub += orderBy;
-    console.log(sqlPub);*/
+    console.log(sqlPub);
 
     conexion.query(sqlPub, function (err, result, fields) {
         if (err) throw err;
@@ -264,18 +264,19 @@ router.put('/:id', (req, res) => {
         req.body.recetaName,
         req.body.recetaIngredientes,
         req.body.recetaPuntuacion,
-        req.body.modo,
+        req.body.selectModo,
         req.body.recetaCategory
     ];
+     console.log(req.body);
 
     if (req.files) {
         //borro el archivo de la imagen anterior
-        conexion.query('SELECT rec_foto FROM recetas WHERE rec_id=', function (err, result, fields) {
+        conexion.query('SELECT rec_foto FROM recetas WHERE rec_id=?' + req.params.id, function (err, result, fields) {
             if (err) {
                 console.log('error')
             } else {
 
-                ss.unlink('../public/images' + path.basename(result[0].rec_foto), err => {
+                fs.unlink('../public/images' + path.basename(result[0].rec_foto), err => {
                     if (err) throw err;
 
                     console.log('archivo borrado');
@@ -295,7 +296,7 @@ router.put('/:id', (req, res) => {
             }
         })
 
-        sqlUpdate += ',rec_foto =?';
+        sqlUpdate += ',rec_foto =? ';
         values.push(process.env.IMAGES_URL + imageFileName);
 
     } else {
@@ -307,6 +308,7 @@ router.put('/:id', (req, res) => {
 
     conexion.query(sqlUpdate, values, function (err, result, fields) {
         if (err) {
+            console.log(err);
             res.json(
                 {
                     status: 'error',

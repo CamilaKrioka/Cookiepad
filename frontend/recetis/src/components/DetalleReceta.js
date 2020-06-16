@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useParams } from 'react-router-dom';
 import Image from 'react-bootstrap/Image'
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { LinkContainer } from 'react-router-bootstrap';
+import Container from 'react-bootstrap/Container'
 
 
-export default () => {
+export default (props) => {
 
     let { id } = useParams();
 
@@ -33,6 +34,7 @@ export default () => {
     return (
 
         <>
+        
             <Row className="d-flex justify-content-center">
                 <Col md="12">
                     <Breadcrumb>
@@ -46,34 +48,24 @@ export default () => {
                 </Col>
 
             </Row>
-
-            <Row className="d-flex justify-content-center">
-                <Col md={6} >
+            <Container>
+            <Row className="d-flex justify-content-left">
+                <Col md={2} >
                     <h2>
                         {receta.nombre}
                     </h2>
-
-
                 </Col>
-            </Row>
-
-            <Row className="d-flex justify-content-center">
+           
                 <Col md={4} className="d-flex ">
                     <img src={receta.imagen} className="img-fluid" />
+                    
                 </Col>
+                <Col style={{ backgroundColor: "#F9E79F" }}><h3> Ingredientes:  </h3>
+                    <h4> {receta.ingredientes} </h4></Col>
             </Row>
 
-            <Row className="d-flex justify-content-center">
-                <Col md={4} className="d-flex ">
-                    <h3> Ingredientes:  </h3>
-                </Col>
-
-            </Row>
-            <Row className="d-flex justify-content-center">
-                <Col md={6}>
-                    <h4> {receta.ingredientes} </h4>
-                </Col>
-            </Row>
+         </Container>   
+           
 
         </>
     )
